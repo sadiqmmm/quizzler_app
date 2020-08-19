@@ -39,7 +39,25 @@ class QuizzlerApp extends StatefulWidget {
 class _QuizzlerAppState extends State<QuizzlerApp> {
   List<Icon> scoreKeeper = [];
 
-  List<bool> answers = [false, true, false, false];
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizBrain.getQuestionAnswer();
+
+    if (userPickedAnswer == correctAnswer) {
+      scoreKeeper.add(
+        Icon(
+          Icons.check,
+          color: Colors.green,
+        ),
+      );
+    } else {
+      scoreKeeper.add(
+        Icon(
+          Icons.close,
+          color: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,21 +85,17 @@ class _QuizzlerAppState extends State<QuizzlerApp> {
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
-              onPressed: () {
-                bool correctAnswer = quizBrain.getQuestionAnswer();
-
-                if (correctAnswer == true) {
-                  print("Right!");
-                } else {
-                  print("Wrong!");
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
-              },
               child: Text('True'),
               textColor: Colors.white,
               color: Colors.green,
+              onPressed: () {
+                checkAnswer(true);
+                setState(
+                  () {
+                    quizBrain.nextQuestion();
+                  },
+                );
+              },
             ),
           ),
         ),
@@ -89,21 +103,17 @@ class _QuizzlerAppState extends State<QuizzlerApp> {
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
-              onPressed: () {
-                bool correctAnswer = quizBrain.getQuestionAnswer();
-
-                if (correctAnswer == false) {
-                  print("Right!");
-                } else {
-                  print("Wrong!");
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
-              },
               child: Text('False'),
               textColor: Colors.white,
               color: Colors.red,
+              onPressed: () {
+                checkAnswer(false);
+                setState(
+                  () {
+                    quizBrain.nextQuestion();
+                  },
+                );
+              },
             ),
           ),
         ),
