@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() {
   runApp(MyApp());
@@ -13,6 +16,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
         appBar: AppBar(
+          backgroundColor: Colors.blueGrey,
           title: Text("Quizzler App"),
           centerTitle: true,
         ),
@@ -35,6 +39,8 @@ class QuizzlerApp extends StatefulWidget {
 class _QuizzlerAppState extends State<QuizzlerApp> {
   List<Icon> scoreKeeper = [];
 
+  List<bool> answers = [false, true, false, false];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,7 +53,7 @@ class _QuizzlerAppState extends State<QuizzlerApp> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                "My Question Text",
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -62,13 +68,15 @@ class _QuizzlerAppState extends State<QuizzlerApp> {
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
               onPressed: () {
+                bool correctAnswer = quizBrain.getQuestionAnswer();
+
+                if (correctAnswer == true) {
+                  print("Right!");
+                } else {
+                  print("Wrong!");
+                }
                 setState(() {
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
+                  quizBrain.nextQuestion();
                 });
               },
               child: Text('True'),
@@ -82,13 +90,15 @@ class _QuizzlerAppState extends State<QuizzlerApp> {
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
               onPressed: () {
+                bool correctAnswer = quizBrain.getQuestionAnswer();
+
+                if (correctAnswer == false) {
+                  print("Right!");
+                } else {
+                  print("Wrong!");
+                }
                 setState(() {
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  );
+                  quizBrain.nextQuestion();
                 });
               },
               child: Text('False'),
