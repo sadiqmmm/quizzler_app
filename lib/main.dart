@@ -36,6 +36,17 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper = [
+    const Icon(
+      Icons.check,
+      color: Colors.green,
+    ),
+    const Icon(
+      Icons.close,
+      color: Colors.red,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +54,7 @@ class _QuizPageState extends State<QuizPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         const Expanded(
-          flex: 1,
+          flex: 5,
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
@@ -66,7 +77,16 @@ class _QuizPageState extends State<QuizPage> {
                 primary: Colors.green, // background
                 onPrimary: Colors.white, // foreground
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  scoreKeeper.add(
+                    const Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                });
+              },
               child: const Text(
                 'True',
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -82,13 +102,25 @@ class _QuizPageState extends State<QuizPage> {
                 primary: Colors.red, // background
                 onPrimary: Colors.white, // foreground
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  scoreKeeper.add(
+                    const Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                });
+              },
               child: const Text(
                 'False',
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
               ),
             ),
           ),
+        ),
+        Row(
+          children: scoreKeeper,
         ),
       ],
     );
